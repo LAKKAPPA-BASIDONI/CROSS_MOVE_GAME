@@ -33,14 +33,9 @@ public class MinimaxAlgorithm {
 
     static int minimax(char[][] board, int depth, boolean isMaximizing) {
         int score = evaluate(board);
-
-        if (score == 10 || score == -10) {
-            return score;
-        }
-
-        if (!isMovesLeft(board)) {
-            return 0; // Draw
-        }
+        if (score == 10) return score - depth;
+        if (score == -10) return score + depth;
+        if (!isMovesLeft(board)) return 0;
 
         if (isMaximizing) {
             int best = Integer.MIN_VALUE;
@@ -85,7 +80,6 @@ public class MinimaxAlgorithm {
     }
 
     static int evaluate(char[][] board) {
-        // Check rows and columns
         for (int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != '\0') {
                 if (board[i][0] == PLAYER) return 10;
@@ -97,7 +91,6 @@ public class MinimaxAlgorithm {
             }
         }
 
-        // Check diagonals
         if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != '\0') {
             if (board[0][0] == PLAYER) return 10;
             if (board[0][0] == AI) return -10;
@@ -107,6 +100,6 @@ public class MinimaxAlgorithm {
             if (board[0][2] == AI) return -10;
         }
 
-        return 0; // No winner yet
+        return 0;
     }
 }
